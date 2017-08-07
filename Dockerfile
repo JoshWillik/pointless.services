@@ -1,6 +1,6 @@
 FROM node
 ADD src/ /app
 WORKDIR /app
-RUN install
+RUN npm install
 EXPOSE 80
 CMD ["npm", "run", "start"]
