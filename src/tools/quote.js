@@ -8,7 +8,7 @@ module.exports = (req, res, next) => {
     plan.push(!(i % 2) ? ['word'] : ' ')
   })
   plan.push('.')
-  let quote = '' + xkcdpass.generate({plan})
+  let quote = xkcdpass.generate({plan})
   quote = quote[0].toUpperCase() + quote.slice(1)
   let who = faker.name.firstName()
   who = `${who} ${who}son`
