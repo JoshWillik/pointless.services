@@ -15,7 +15,7 @@ app.get('/', (req, res, next) => {
   file.send('control-panel.html', res).catch(next)
 })
 app.get('/status', (req, res, next) => {
-  res.send({})
+  res.send({down_for})
 })
 app.post('/status', body_parser.json(), (req, res, next) => {
   let time = req.body.time
@@ -26,7 +26,7 @@ app.post('/status', body_parser.json(), (req, res, next) => {
   res.json({status: 'ok'})
 })
 app.site_status = (req, res, next) => {
-  if (down_for <= 0) {
+  if (down_for <= 0 || req.url === '/cp/status' && req.method === 'GET') {
     return next()
   }
   file.send('down.html', res.status(503)).catch(next)

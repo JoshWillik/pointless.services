@@ -1,1 +1,21 @@
-<h1>Someone shut the site down, we'll be back soon</h1>
+<script>let module = {}</script>
+<script src="https://unpkg.com/ms@2.0.0/index.js"></script>
+<script>let ms = module.exports</script>
+<h1>Someone shut the site down</h1>
+<p>We'll be back <span id=time>soon</span></p>
+<script>
+  fetch('/cp/status').then(r => r.json())
+  .then(data => show_countdown(data.down_for))
+  function show_countdown (down) {
+    let end_date = Date.now() + down
+    let el = document.querySelector('#time')
+    function frame () {
+      if (Date.now() > end_date) {
+        return window.location.reload()
+      }
+      el.innerHTML = 'in ' + ms(end_date - Date.now(), {long: true})
+      requestAnimationFrame(frame)
+    }
+    frame()
+  }
+</script>
