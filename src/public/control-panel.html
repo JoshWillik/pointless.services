@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pointless Control Panel</title>
+</head>
+<body>
+  <h1>Pointless Control Panel</h1>
+  <p>
+    Turn the site off:
+    <button onclick="disable_site(60e3)">1 minute</button>
+    <button onclick="disable_site(300e3)">5 minutes</button>
+    <button onclick="disable_site(600e3)">10 minutes</button>
+  </p>
+  <script>
+    function disable_site (ms) {
+      let headers = new Headers()
+      headers.append('Content-Type', 'application/json')
+      fetch('/cp/status', {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({time: ms}),
+      }).then(() => window.location.reload())
+    }
+  </script>
+</body>
+</html>
