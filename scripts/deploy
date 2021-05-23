@@ -2,7 +2,7 @@
 set -eu
 
 secret () {
-  echo3 $(vault read -field=value secret/mail.asterfield.xyz/$1)
+  echo $(vault read -field=value secret/mail.asterfield.xyz/$1)
 }
 
 host=${1:-}
@@ -11,10 +11,13 @@ if [ -z "$host" ]; then
   echo "Usage: ${BASH_SOURCE[0]} <host>"
   exit
 fi
-eval $(docker-machine env $host)
-docker build -t $name-whisp .
-docker rm -f $name || :
-docker run -d --restart always --name $name \
+function _docker {
+  docker-ssh root@$host -- $@
+}
+
+_docker build -t $name-whisp .
+_docker rm -f $name || :
+_docker run -d --restart always --name $name \
   -p 127.0.0.1::80 \
   -e VIRTUAL_HOST=pointless.services \
   -e LETSENCRYPT_HOST=pointless.services \
