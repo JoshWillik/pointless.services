@@ -26,6 +26,10 @@ register_tool('shout', {
   handler: shout.routes(),
   disabled: true,
 })
+register_tool('search', {
+  name: 'search engine',
+  handler: './tools/search.js',
+})
 let tool_index = (req, res, next) => {
   let html = '<h1>Pointless Services</h1>'
   +_(tools)

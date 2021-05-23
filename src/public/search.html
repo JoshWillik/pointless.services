@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pointless search engine</title>
+</head>
+<style>
+	.mb-3 {
+		margin-bottom: 1em;
+	}
+	code { background: lightblue; padding: 0.125em; cursor: pointer; }
+</style>
+<body>
+  <h1>Pointless search engine</h1>
+  <form class="search_form mb-3" method="post">
+		<input id="q" type="text" name="q" placeholder="Enter your query..." autocomplete="off" autofocus>
+		<button id="search">Search</button>
+		<span id="cheeky_message"></span>
+	</form>
+	<em>*Only supports HTTPS websites for added security</em>
+	<h2>Popular searches</h2>
+	<ul id="popular">
+		<li><code>duckduckgo</code></li>
+		<li><code>bing</code></li>
+		<li><code>yahoo</code></li>
+		<li><code>askjeeves</code></li>
+		<li><code>google</code></li>
+	</ul>
+	<script>
+		document.querySelector('#popular').addEventListener('click', e=>{
+			let code = e.target.querySelector('code') || e.target
+			let term = code.innerText
+			document.querySelector('#q').value = term
+			document.querySelector('#cheeky_message').innerText = '<-- click here'
+		})
+	</script>
+</body>
+</html>
