@@ -1,3 +1,8 @@
 #!/usr/bin/env bash
 set -ue
+secret () {
+  echo $(vault read -field=value secret/mail.asterfield.xyz/$1)
+}
+export AWS_ACCESS_KEY_ID=$(secret aws/access_key)
+export AWS_SECRET_ACCESS_KEY=$(secret aws/secret_access_key)
 cd src && npm run dev

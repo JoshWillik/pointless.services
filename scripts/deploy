@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 set -eu
 
+secret () {
+  echo3 $(vault read -field=value secret/mail.asterfield.xyz/$1)
+}
+
 host=${1:-}
 name=pointless.services
 if [ -z "$host" ]; then
@@ -15,4 +19,6 @@ docker run -d --restart always --name $name \
   -e VIRTUAL_HOST=pointless.services \
   -e LETSENCRYPT_HOST=pointless.services \
   -e LETSENCRYPT_EMAIL=joshwillik@gmail.com \
+  -e AWS_ACCESS_KEY_ID=$(secret aws/access_key) \
+  -e AWS_SECRET_ACCESS_KEY=$(secret aws/secret_access_key) \
   $name-whisp
