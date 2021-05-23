@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pointless Shouty Email</title>
+</head>
+<body>
+  <h1>Pointless Shouty Email</h1>
+  <p>
+    Send an email to
+    <a href="mailto:shout@pointless.services">shout@pointless.services</a>
+  </p>
+  <p>People shouted at so far: <span id="people-shouted"></span></p>
+  <script>
+    function load_shouts (ms) {
+      fetch('/shout/shouts')
+      .then(res => res.json())
+      .then(data =>
+        document.querySelector('#people-shouted').innerHTML = data.shouts)
+    }
+    load_shouts()
+    setInterval(load_shouts, 10e3)
+  </script>
+</body>
+</html>
